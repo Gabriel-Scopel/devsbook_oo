@@ -1,4 +1,5 @@
 <?php
+
 require_once 'dao/UserDaoMysql.php';
 class Auth{//autentica login do usuário
     private $pdo;
@@ -8,7 +9,7 @@ class Auth{//autentica login do usuário
         $this->pdo = $pdo;
         $this->base = $base;
     }
-    public function checkTokeN(){
+    public function checkToken(){
         if(!empty($SESSION['token'])){
             $token = $_SESSION['token'];
             $userDao = new UserDaoMysql($this->pdo);
@@ -33,5 +34,26 @@ class Auth{//autentica login do usuário
         }
         return false;
 
+    }
+    public function emailExists($email){
+        $userDao = new UserDaoMysql($this->pdo);
+        return $userDao->findByEmail($email) ? true : false;
+    }
+
+    public function registerUser($name, $email, $password, $birthdate){
+        $userDao = new UserDaoMysql($this->pdo);
+        $hash = password_hash($password, PASSWORD_DEFAULT);
+        $token = md5(time().rand(0,9999));
+
+        $newUser = new User();
+        $newUser->name = $name;
+        $newUser->email = $email;
+        $newUser->password = $hash;
+        $newUser->birthdate = $birthdate;
+        $newUser->token = $token;
+
+
+        $userDao->insert($newUser);
+        $_SESSION['token'];
     }
 }
