@@ -11,6 +11,7 @@ class UserDaoMysql implements UserDAO{
         $u = new User();
         $u->id = $array['id'] ?? 0;
         $u->email = $array['email'] ?? "";
+        $u->password = $array['password'] ?? "";
         $u->name = $array['name'] ?? "";
         $u->birthdate = $array['birthdate'] ?? "";
         $u->city = $array['city'] ?? "";
