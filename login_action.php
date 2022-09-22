@@ -9,11 +9,12 @@ $password = filter_input(INPUT_POST, 'password');
 if($email && $password){
     $auth  = new Auth($pdo, $base);
         if($auth->validateLogin($email, $password)){
-            header("location: ".$base);
-            exit;
+           header("location: ".$base);
+           exit;
         }
     
 }
+
 $_SESSION['flash'] = 'email e/ou senha incorretos.';
 header("location: ".$base."/login.php");
 exit;

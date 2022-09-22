@@ -11,28 +11,32 @@ class Auth{//autentica login do usuário
         $this->base = $base;
         $this->dao = new UserDaoMysql($this->pdo);
     }
-    public function checkToken(){
-        if(!empty($SESSION['token'])){
+    public function checkToken() {
+        if(!empty($_SESSION['token'])) {
             $token = $_SESSION['token'];
-            
+
             $user = $this->dao->findByToken($token);
-            if($user){
+            
+            if($user) {
                 return $user;
             }
         }
-        header("location: ".$this->base."/login.php");
+
+        header("Location: ".$this->base."/login.php");
+        exit;
     }
     public function validateLogin($email, $password){
         
         $user = $this->dao->findByEmail($email);
         if($user){
             if(password_verify($password, $user->password)){
-
+                
                 $token = md5(time().rand(0,9999));
                 $_SESSION['token'] = $token;
                 $user -> token = $token;
                 $this->dao->update($user);
                 return true;
+                
             }
         }
         return false;
