@@ -14,7 +14,7 @@ $id = filter_input(INPUT_GET, 'id');
 if (!$id) {
     $id = $userInfo->id;
 }
-if($id != $userInfo->id){
+if ($id != $userInfo->id) {
     $activeMenu = '';
 }
 
@@ -107,7 +107,7 @@ require 'partials/menu.php';
                         <span>(<?= count($user->following); ?>)</span>
                     </div>
                     <div class="box-header-buttons">
-                        <a href="<?= $base; ?>/amigos.php?id=<?= $user->id; ?>">ver todos</a>
+                        <a href="<?= $base; ?>/amigos.php?id=<? $user->id; ?>">ver todos</a>
                     </div>
                 </div>
                 <div class="box-body friend-list">
@@ -125,8 +125,6 @@ require 'partials/menu.php';
                             </div>
                         <?php endforeach; ?>
                     <?php endif; ?>
-
-
                 </div>
             </div>
 
@@ -147,11 +145,11 @@ require 'partials/menu.php';
                     <?php if (count($user->photos) > 0) : ?>
                         <?php foreach ($user->photos as $kye => $item) : ?>
                             <div class="user-photo-item">
-                                <a href="#modal-<?=$key;?>" rel="modal:open">
-                                    <img src="<?=$base;?>/media/uploads/<?=$item->body;?>" />
+                                <a href="#modal-<?= $key; ?>" rel="modal:open">
+                                    <img src="<?= $base; ?>/media/uploads/<?= $item->body; ?>" />
                                 </a>
-                                <div id="modal-<?=$key;?>" style="display:none">
-                                    <img src="<?=$base;?>/media/uploads/<?=$item->body;?>" />
+                                <div id="modal-<?= $key; ?>" style="display:none">
+                                    <img src="<?= $base; ?>/media/uploads/<?= $item->body; ?>" />
                                 </div>
                             </div>
                         <?php endforeach; ?>
@@ -159,17 +157,17 @@ require 'partials/menu.php';
 
                 </div>
             </div>
-            <?php if($id == $userInfo->id): ?>
-                <?php require 'partials/feed-editor.php';?>
+            <?php if ($id == $userInfo->id) : ?>
+                <?php require 'partials/feed-editor.php'; ?>
             <?php endif; ?>
 
-            <?php if(count($feed)>0): ?>
-                <?php foreach($feed as $item): ?>
+            <?php if (count($feed) > 0) : ?>
+                <?php foreach ($feed as $item) : ?>
                     <?php require 'partials/feed-item.php'; ?>
-                <?php endforeach;?>
-            <?php else: ?>
+                <?php endforeach; ?>
+            <?php else : ?>
                 Não há postagens para exibir
-            <?php endif;?>
+            <?php endif; ?>
 
 
         </div>

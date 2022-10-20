@@ -92,7 +92,6 @@ require 'partials/menu.php';
                             <div class="full-friend-list">
 
                                 <?php foreach ($user->followers as $item) : ?>
-
                                     <div class="friend-icon">
                                         <a href="<?= $base; ?>/perfil.php?id=<?= $item->id; ?>">
                                             <div class="friend-icon-avatar">
@@ -104,7 +103,6 @@ require 'partials/menu.php';
                                         </a>
                                     </div>
                                 <?php endforeach; ?>
-
 
                             </div>
 
