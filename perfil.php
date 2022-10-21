@@ -2,7 +2,7 @@
 require_once 'config.php';
 require_once 'models/Auth.php';
 require_once 'dao/PostDaoMysql.php';
-
+require_once 'dao/UserRelationDaoMysql.php';
 
 $auth = new Auth($pdo, $base);
 $userInfo = $auth->checkToken();
@@ -20,6 +20,7 @@ if ($id != $userInfo->id) {
 
 $postDao = new PostDaoMysql($pdo);
 $userDao = new UserDaoMysql($pdo);
+$UserRelationDao = new UserRelationDaoMysql($pdo);
 
 $user = $userDao->findById($id, true);
 if (!$user) {
@@ -31,6 +32,8 @@ $dateTo = new DateTime('today');
 $user->ageYears = $dateFrom->diff($dateTo)->y;
 
 $feed = $postDao->getUserFeed($id);
+
+$isFollowing = $UserRelationDao->isFollowing($userInfo->id, $id);
 /*
 $postDao = new PostDaoMysql($pdo);
 $feed = $postDao->getHomeFeed($userInfo->id);*/
@@ -55,6 +58,11 @@ require 'partials/menu.php';
                         <?php endif; ?>
                     </div>
                     <div class="profile-info-data row">
+                        <?php if ($id != $userInfo->id) : ?>
+                            <div class="profile-info-item m-width-20">
+                                <a href="follow_action.php?id=<?=$id;?>" style=" text-decoration: none; display:flex; flex-direction:column; justify-content:center; align-items: center" class="button"><?=(!$isFollowing)?'Seguir':'Deixar de Seguir'?></a>
+                            </div>
+                        <?php endif; ?>
                         <div class="profile-info-item m-width-20">
                             <div class="profile-info-item-n"><?= count($user->followers); ?></div>
                             <div class="profile-info-item-s">Seguidores</div>
@@ -175,6 +183,7 @@ require 'partials/menu.php';
     </div>
 
 </section>
+
 <?php
 require 'partials/footer.php';
 ?>

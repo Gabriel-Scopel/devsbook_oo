@@ -5,8 +5,10 @@ class UserRelation{
     public $user_to;
 }
 
-interface UserRelationDAO{
+interface UserRelationDao{
     public function insert(UserRelation $u);
+    public function delete(UserRelation $u);
     public function getFollowing($id);
     public function getFollowers($id);
+    public function isFollowign($id1, $id2);
 }
