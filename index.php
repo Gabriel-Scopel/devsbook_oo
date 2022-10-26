@@ -31,9 +31,9 @@ require 'partials/menu.php';
                                     
                                 </div>
                             </div>
-                            <div class="box-body">
-                                <a href=""><img src="media/avatars/default.jpg" /></a>
-                                <a href=""><img src="media/avatars/default.jpg"/></a>
+                            <div style="display: flex;" class="box-body">
+                                <a style=" margin: 5px;" href=""><img width="30px" src="media/avatars/default.jpg" /></a>
+                                <a  style=" margin: 5px;" href=""><img width="30px" src="media/avatars/default.jpg"/></a>
                             </div>
                         </div>
                         <div class="box">

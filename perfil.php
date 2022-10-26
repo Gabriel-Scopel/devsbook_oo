@@ -60,7 +60,7 @@ require 'partials/menu.php';
                     <div class="profile-info-data row">
                         <?php if ($id != $userInfo->id) : ?>
                             <div class="profile-info-item m-width-20">
-                                <a href="follow_action.php?id=<?=$id;?>" style=" text-decoration: none; display:flex; flex-direction:column; justify-content:center; align-items: center" class="button"><?=(!$isFollowing)?'Seguir':'Deixar de Seguir'?></a>
+                                <a href="follow_action.php?id=<?= $id; ?>" style=" text-decoration: none; display:flex; flex-direction:column; justify-content:center; align-items: center" class="button"><?= (!$isFollowing) ? 'Seguir' : 'Deixar de Seguir' ?></a>
                             </div>
                         <?php endif; ?>
                         <div class="profile-info-item m-width-20">
@@ -151,15 +151,18 @@ require 'partials/menu.php';
                 </div>
                 <div class="box-body row m-20">
                     <?php if (count($user->photos) > 0) : ?>
-                        <?php foreach ($user->photos as $kye => $item) : ?>
-                            <div class="user-photo-item">
-                                <a href="#modal-<?= $key; ?>" rel="modal:open">
-                                    <img src="<?= $base; ?>/media/uploads/<?= $item->body; ?>" />
-                                </a>
-                                <div id="modal-<?= $key; ?>" style="display:none">
-                                    <img src="<?= $base; ?>/media/uploads/<?= $item->body; ?>" />
+
+                        <?php foreach ($user->photos as $key => $item) : ?>
+                            <?php if ($key < 4) : ?>
+                                <div style="max-width: 25%; margin-right:10px;" class="user-photo-item">
+                                    <a href="#modal-<?= $key; ?>" data-modal-open>
+                                        <img src="<?= $base; ?>/media/uploads/<?= $item->body; ?>" />
+                                    </a>
+                                    <div id="modal-<?= $key; ?>" style="display:none">
+                                        <img src="<?= $base; ?>/media/uploads/<?= $item->body; ?>" />
+                                    </div>
                                 </div>
-                            </div>
+                            <?php endif; ?>
                         <?php endforeach; ?>
                     <?php endif; ?>
 
