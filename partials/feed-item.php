@@ -25,9 +25,14 @@ switch ($item->type) {
                 <br />
                 <span class="fidi-date"><?= date('d/m/Y', strtotime($item->created_at)); ?></span>
             </div>
-            <div class="feed-item-head-btn">
-                <img src="<?= $base; ?>/assets/images/more.png" />
-            </div>
+            <?php if($item->mine):?>
+                <div class="feed-item-head-btn">
+                    <img src="<?= $base; ?>/assets/images/more.png" />
+                    <div style="TEXT-ALIGN:CENTER; display: none; position: absolute; background-color:#ff4040; width:150px; padding:5px; border:1px solid black; border-radius: 3px; margin-left: -130px;" class="feed-item-more-window">
+                        <a style=";dispaly:block; padding:7px; text-decoration:none; color:black;" href="<?=$base;?>/excluir_post_action.php?id=<?=$item->id;?>">Excluir Post</a>
+                    </div>
+                </div>
+            <?php endif;?>
         </div>
         <div class="feed-item-body mt-10 m-width-20">
             <?php
