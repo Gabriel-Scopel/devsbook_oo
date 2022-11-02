@@ -17,6 +17,10 @@ if (!$id) {
 if ($id != $userInfo->id) {
     $activeMenu = '';
 }
+$page = intval(filter_input(INPUT_GET, 'p'));
+        if($page < 1){
+            $page = 1;
+        }
 
 $postDao = new PostDaoMysql($pdo);
 $userDao = new UserDaoMysql($pdo);
@@ -31,7 +35,10 @@ $dateFrom = new DateTime($user->birthdate);
 $dateTo = new DateTime('today');
 $user->ageYears = $dateFrom->diff($dateTo)->y;
 
-$feed = $postDao->getUserFeed($id);
+$info = $postDao->getUserFeed($id, $page);
+$feed = $info['feed'];
+$pages = $info['pages'];
+$currentPage = $info['currentPage'];
 
 $isFollowing = $UserRelationDao->isFollowing($userInfo->id, $id);
 /*
@@ -176,6 +183,12 @@ require 'partials/menu.php';
                 <?php foreach ($feed as $item) : ?>
                     <?php require 'partials/feed-item.php'; ?>
                 <?php endforeach; ?>
+                <div class="feed-pagination">
+                    <?php for($q=0;$q<$pages;$q++): ?>
+                        <a style="display: inline-block; padding:7px 10px; border:1px solid #ccc; margin:5px; text-decoration:none; color:black; border-radius: 3px" href="<?=$base?>/perfil.php?id=<?=$id?>&p=<?=$q+1?>"><?=$q+1?></a>
+                    <?php endfor; ?>
+                </div>
+                
             <?php else : ?>
                 Não há postagens para exibir
             <?php endif; ?>

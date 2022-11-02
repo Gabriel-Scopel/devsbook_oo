@@ -6,10 +6,15 @@ require_once 'dao/PostDaoMysql.php';
 $auth = new Auth($pdo, $base);
 $userInfo = $auth->checkToken();
 $activeMenu = 'home';
+$page = intval(filter_input(INPUT_GET, 'p'));
+        if($page < 1){
+            $page = 1;
+        }
 
 $postDao = new PostDaoMysql($pdo);
-$feed = $postDao->getHomeFeed($userInfo->id);
-
+$info= $postDao->getHomeFeed($userInfo->id);
+$feed = $info['feed'];
+$pages = $info['pages'];
 
 
 require 'partials/header.php';
@@ -21,6 +26,11 @@ require 'partials/menu.php';
            <?php foreach($feed as $item): ?>
                 <?php require 'partials/feed-item.php'; ?>
             <?php endforeach; ?>
+            <div class="feed-pagination">
+                <?php for($q=0;$q<$pages;$q++): ?>
+                    <a style="display: inline-block; padding:7px 10px; border:1px solid #ccc; margin:5px; text-decoration:none; color:black; border-radius: 3px" href="<?=$base?>/?p=<?=$q+1?>"><?=$q+1?></a>
+                <?php endfor; ?>
+            </div>
             </div>
        
             <div class="column side pl-5">
@@ -31,9 +41,9 @@ require 'partials/menu.php';
                                     
                                 </div>
                             </div>
-                            <div style="display: flex;" class="box-body">
-                                <a style=" margin: 5px;" href=""><img width="30px" src="media/avatars/default.jpg" /></a>
-                                <a  style=" margin: 5px;" href=""><img width="30px" src="media/avatars/default.jpg"/></a>
+                            <div  class="box-body">
+                                    <a href=""><img src="https://alunos.b7web.com.br/media/courses/php.jpg" /></a>
+                                    <a href=""><img src="https://alunos.b7web.com.br/media/courses/laravel.jpg" /></a>
                             </div>
                         </div>
                         <div class="box">
